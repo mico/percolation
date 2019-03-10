@@ -1,9 +1,6 @@
 plugins {
     // Apply the java plugin to add support for Java
     java
-
-    // Apply the application plugin to add support for building an application
-    application
 }
 
 repositories {
@@ -22,11 +19,6 @@ dependencies {
     // Use TestNG framework, also requires calling test.useTestNG() below
     testImplementation("org.testng:testng:6.14.3")
     compile(fileTree("lib").matching{ include("*.jar") })
-}
-
-application {
-    // Define the main class for the application
-    mainClassName = "percolation.Percolation"
 }
 
 val test by tasks.getting(Test::class) {

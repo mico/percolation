@@ -5,14 +5,35 @@ package percolation;
 
 import org.testng.annotations.*;
 import static org.testng.Assert.*;
+
+import java.nio.file.Files;
+import java.util.List;
+
 import percolation.Percolation;
+import java.nio.file.Files;
+import java.nio.file.FileSystems;
+import java.io.*;
+import java.util.Arrays;
 
 public class PercolationTest {
     @Test public void percolatesForGivenData() {
-        Percolation pc = new Percolation(2);
-        pc.open(1,1);
-        pc.open(2,2);
-        pc.open(1,2);
-        assertEquals(pc.percolates(), true);
+        final List<Integer> files = Arrays.asList(1,2,3,4,5,6,7,8,10,20,50);
+        files.forEach((file_id) -> {
+            List<String> lines;
+            try {
+                lines = Files.readAllLines(FileSystems.getDefault().getPath("data/", String.format("input%s.txt", file_id)));
+                Percolation pc = new Percolation(Integer.parseInt(lines.remove(0)));
+                for (String line : lines) {
+                    String[] row = line.trim().split("\\s+");
+                    if (line.trim().length() == 0) { continue; }
+                    pc.open(Integer.parseInt(row[0]), Integer.parseInt(row[1]));
+                };
+
+                assertEquals(pc.percolates(), true);
+
+            } catch (IOException e) {
+                System.out.print("io exception\n");
+            }
+        });
     }
 }
