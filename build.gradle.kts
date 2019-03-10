@@ -1,6 +1,7 @@
 plugins {
     // Apply the java plugin to add support for Java
     java
+    application
 }
 
 repositories {
@@ -10,6 +11,10 @@ repositories {
     flatDir {
         dirs("lib")
     }
+}
+
+application {
+    mainClassName = "percolation.PercolationStats"
 }
 
 dependencies {
