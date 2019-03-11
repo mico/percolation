@@ -30,7 +30,7 @@ public class PercolationStats {
                 pc.open(row, col);
                 // print("opened " + pc.numberOfOpenSites() + "\n");
             }
-            print("percolates " + i + "\n");
+            // print("percolates " + i + "\n");
             results[i] = pc.numberOfOpenSites();
             total += pc.numberOfOpenSites();
         });
@@ -38,23 +38,34 @@ public class PercolationStats {
 
     public double mean()                          // sample mean of percolation threshold
     {
-        return (float) (total / trials) / (n*n);
+        return ((double) total / trials) / (n*n);
     }
     public double stddev()                        // sample standard deviation of percolation threshold
     {
-        return 0.1;
+        double mean = 0;
+        double sum = 0;
+        for (int i = 0; i < trials; i += 1) {
+            double r = results[i];
+            double delta = mean + ((double)r - mean) / (i + 1);
+            sum += (r - mean) * (r - delta);
+            mean = delta;
+        }
+        return Math.sqrt(sum / (trials - 1));
     }
     public double confidenceLo()                  // low  endpoint of 95% confidence interval
     {
-        return 0.1;
+        return mean() - 1.96 * stddev() / Math.sqrt(trials);
     }
     public double confidenceHi()                  // high endpoint of 95% confidence interval
     {
-        return 0.1;
+        return mean() + 1.96 * stddev() / Math.sqrt(trials);
     }
 
     public static void main(String[] args) {
         PercolationStats ps = new PercolationStats(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
-        print("mean: " + ps.mean());
+        print("mean: " + ps.mean() + "\n");
+        print("stddev: " + ps.stddev() + "\n");
+        print("confidenceLo: " + ps.confidenceLo() + "\n");
+        print("confidenceHi: " + ps.confidenceHi() + "\n");
     }
 }

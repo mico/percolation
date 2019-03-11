@@ -1,7 +1,5 @@
 package percolation;
-
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
-
 import java.util.ArrayList;
 
 public class Percolation {
@@ -44,17 +42,13 @@ public class Percolation {
         if (isOpen(row, col)) { return; }
         int p = positionByRowCol(row, col);
         openSites[p - first_index] = true;
-        // System.out.print("open " + row + " " + col + "\n");
         if (row == 1) {
-            // System.out.print("union p q " + p + " " + 0 + "\n");
             uf.union(p, 0);
         }
         if (row == length) {
-            // System.out.print("union p q " + p + " " + 1 + "\n");
             uf.union(p, 1);
         }
         findOpenAround(row, col).forEach((q) -> {
-            // System.out.print("union p q " + p + " " + q + "\n");
             uf.union(p, q);
         });
         numberOpenSites += 1;
@@ -62,7 +56,6 @@ public class Percolation {
 
     // is site (row, col) open?
     public boolean isOpen(int row, int col) {
-        //print("open? " + openSites[positionByRowCol(row, col) - first_index] + "\n");
         return openSites[positionByRowCol(row, col) - first_index];
     }
 
