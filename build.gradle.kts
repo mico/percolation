@@ -2,6 +2,7 @@ plugins {
     // Apply the java plugin to add support for Java
     java
     application
+    checkstyle
 }
 
 repositories {
@@ -11,6 +12,10 @@ repositories {
     flatDir {
         dirs("lib")
     }
+}
+
+checkstyle {
+    toolVersion = "8.5"
 }
 
 application {
