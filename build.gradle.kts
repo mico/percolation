@@ -14,8 +14,14 @@ repositories {
     }
 }
 
+sourceSets["main"].java.srcDir("src/main")
+
 checkstyle {
     toolVersion = "8.5"
+}
+
+tasks.checkstyleTest.configure {
+    enabled = false
 }
 
 application {

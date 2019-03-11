@@ -1,10 +1,10 @@
-package percolation;
+// package percolation;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 import java.util.ArrayList;
 
 public class Percolation {
     private WeightedQuickUnionUF uf;
-    private int first_index = 2;
+    private int firstIndex = 2;
     private int length;
     private boolean[] openSites;
     private int numberOpenSites = 0;
@@ -17,21 +17,21 @@ public class Percolation {
     }
 
     private int positionByRowCol(int row, int col) {
-        return first_index + length * (row - 1) + (col - 1);
+        return firstIndex + length * (row - 1) + (col - 1);
     }
 
     private ArrayList<Integer> findOpenAround(int row, int col) {
         ArrayList<Integer> openAround = new ArrayList<Integer>();
-        if (col > 1 && openSites[positionByRowCol(row, col-1) - first_index]) {
+        if (col > 1 && openSites[positionByRowCol(row, col-1) - firstIndex]) {
             openAround.add(positionByRowCol(row, col-1));
         }
-        if (col < length && openSites[positionByRowCol(row, col+1) - first_index]) {
+        if (col < length && openSites[positionByRowCol(row, col+1) - firstIndex]) {
             openAround.add(positionByRowCol(row, col+1));
         }
-        if (row > 1 && openSites[positionByRowCol(row-1, col) - first_index]) {
+        if (row > 1 && openSites[positionByRowCol(row-1, col) - firstIndex]) {
             openAround.add(positionByRowCol(row-1, col));
         }
-        if (row < length && openSites[positionByRowCol(row+1, col) - first_index]) {
+        if (row < length && openSites[positionByRowCol(row+1, col) - firstIndex]) {
             openAround.add(positionByRowCol(row+1, col));
         }
         return openAround;
@@ -41,7 +41,7 @@ public class Percolation {
     public void open(int row, int col) {
         if (isOpen(row, col)) { return; }
         int p = positionByRowCol(row, col);
-        openSites[p - first_index] = true;
+        openSites[p - firstIndex] = true;
         if (row == 1) {
             uf.union(p, 0);
         }
@@ -56,7 +56,7 @@ public class Percolation {
 
     // is site (row, col) open?
     public boolean isOpen(int row, int col) {
-        return openSites[positionByRowCol(row, col) - first_index];
+        return openSites[positionByRowCol(row, col) - firstIndex];
     }
 
     // is site (row, col) full?

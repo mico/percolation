@@ -1,16 +1,11 @@
-package percolation;
+// package percolation;
 
 import edu.princeton.cs.algs4.StdRandom;
-
-import java.util.stream.IntStream;
-
-import static edu.princeton.cs.algs4.StdOut.print;
-
 
 public class PercolationStats {
     private int n, trials;
     private Percolation pc;
-    private int results[];
+    private int[] results;
     private int total = 0;
     public PercolationStats(int n, int trials)    // perform trials independent experiments on an n-by-n grid
     {
@@ -22,7 +17,7 @@ public class PercolationStats {
     }
 
     private void collectData() {
-        IntStream.range(0, trials).forEachOrdered((i) -> {
+        for (int i = 0; i < trials; i++) {
             pc = new Percolation(n);
             while (!pc.percolates()) {
                 int row = StdRandom.uniform(n) + 1;
@@ -33,7 +28,7 @@ public class PercolationStats {
             // print("percolates " + i + "\n");
             results[i] = pc.numberOfOpenSites();
             total += pc.numberOfOpenSites();
-        });
+        }
     }
 
     public double mean()                          // sample mean of percolation threshold
@@ -46,7 +41,7 @@ public class PercolationStats {
         double sum = 0;
         for (int i = 0; i < trials; i += 1) {
             double r = results[i];
-            double delta = mean + ((double)r - mean) / (i + 1);
+            double delta = mean + ((double) r - mean) / (i + 1);
             sum += (r - mean) * (r - delta);
             mean = delta;
         }
@@ -63,9 +58,9 @@ public class PercolationStats {
 
     public static void main(String[] args) {
         PercolationStats ps = new PercolationStats(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
-        print("mean: " + ps.mean() + "\n");
-        print("stddev: " + ps.stddev() + "\n");
-        print("confidenceLo: " + ps.confidenceLo() + "\n");
-        print("confidenceHi: " + ps.confidenceHi() + "\n");
+        System.out.print("mean: " + ps.mean() + "\n");
+        System.out.print("stddev: " + ps.stddev() + "\n");
+        System.out.print("confidenceLo: " + ps.confidenceLo() + "\n");
+        System.out.print("confidenceHi: " + ps.confidenceHi() + "\n");
     }
 }
