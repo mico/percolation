@@ -25,7 +25,7 @@ tasks.checkstyleTest.configure {
 }
 
 application {
-    mainClassName = "percolation.PercolationStats"
+    mainClassName = "percolation.PercolationVisualizer"
 }
 
 dependencies {

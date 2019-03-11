@@ -10,16 +10,16 @@
  *  open sites (that aren't full) in white, and blocked sites in black.
  *
  ******************************************************************************/
+package percolation;
 
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
-import src.main.java.percolation.Percolation;
 
 public class InteractivePercolationVisualizer {
 
     public static void main(String[] args) {
         // n-by-n percolation system (read from command-line, default = 10)
-        int n = 10;          
+        int n = 10;
         if (args.length == 1) n = Integer.parseInt(args[0]);
 
         // repeatedly open site specified my mouse click and draw resulting system
