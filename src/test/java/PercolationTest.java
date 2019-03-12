@@ -4,6 +4,7 @@
 // package percolation;
 
 import org.testng.annotations.Test;
+import org.testng.annotations.BeforeGroups;
 import static org.testng.Assert.assertEquals;
 
 import java.nio.file.Files;
@@ -15,7 +16,14 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class PercolationTest {
-    @Test public void percolatesForGivenData() {
+    Percolation pc;
+
+    @BeforeGroups("exception")
+    public void setUpException() {
+        pc = new Percolation(5);
+    }
+    @Test
+    public void percolatesForGivenData() {
         final List<Integer> files = Arrays.asList(1,2,3,4,5,6,7,8,10,20,50);
         files.forEach((file_id) -> {
             List<String> lines;
@@ -34,5 +42,31 @@ public class PercolationTest {
                 System.out.print("io exception\n");
             }
         });
+    }
+
+    // The constructor should throw a java.lang.IllegalArgumentException if n ≤ 0.
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void shouldThrowIllegalArgumentException() {
+        Percolation pc = new Percolation(-1);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class, groups = "exception")
+    public void shouldThrowIllegalArgumentExceptionForOutOfBoundRowOrCol() {
+        pc.open(1, 6);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class, groups = "exception")
+    public void openShouldThrowIllegalArgumentExceptionForNegativeRowOrCol() {
+        pc.open(1, -6);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class, groups = "exception")
+    public void isOpenShouldThrowIllegalArgumentExceptionForNegativeRowOrCol() {
+        pc.isOpen(1, -6);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class, groups = "exception")
+    public void isFullShouldThrowIllegalArgumentExceptionForNegativeRowOrCol() {
+        pc.isFull(1, -6);
     }
 }
