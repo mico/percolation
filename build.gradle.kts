@@ -25,7 +25,7 @@ tasks.checkstyleTest.configure {
 }
 
 application {
-    mainClassName = "percolation.PercolationVisualizer"
+    mainClassName = "PercolationVisualizer"
 }
 
 dependencies {
@@ -41,3 +41,15 @@ val test by tasks.getting(Test::class) {
     // Use TestNG for unit tests
     useTestNG()
 }
+
+// tasks {
+//     task("submission", type = Zip::class) {
+//         username = System.properties["user.name"].replaceAll(" ", "").toLowerCase()
+//         archiveName = username + "_" + rootProject.name + "_submission.zip"
+//         from("src/main/java")
+//         include("*.java")
+//             destinationDir(projectDir)
+//     }
+// }
+
+// build.finalizedBy(submission)

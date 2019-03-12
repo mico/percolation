@@ -1,4 +1,3 @@
-package percolation;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
@@ -24,12 +23,12 @@ public class Percolation {
         int currentIndex = 0;
         if (col > 1 && openSites[positionByRowCol(row, col-1) - firstIndex]) {
             openAround[currentIndex] = positionByRowCol(row, col-1);
-            System.out.println("return pos " + positionByRowCol(row, col-1));
+            // System.out.println("return pos " + positionByRowCol(row, col-1));
             currentIndex += 1;
         }
         if (col < length && openSites[positionByRowCol(row, col+1) - firstIndex]) {
             openAround[currentIndex] = positionByRowCol(row, col+1);
-            System.out.println("return pos " + positionByRowCol(row, col-1));
+            // System.out.println("return pos " + positionByRowCol(row, col-1));
             currentIndex += 1;
         }
         if (row > 1 && openSites[positionByRowCol(row-1, col) - firstIndex]) {
@@ -49,22 +48,22 @@ public class Percolation {
     public void open(int row, int col) {
         if (isOpen(row, col)) { return; }
         int p = positionByRowCol(row, col);
-        System.out.println("row " + row + " col " + col);
+        // System.out.println("row " + row + " col " + col);
         openSites[p - firstIndex] = true;
-        System.out.println("open " + p);
+        // System.out.println("open " + p);
         if (row == 1) {
-            System.out.println("union " + p + " 0");
+            // System.out.println("union " + p + " 0");
             uf.union(p, 0);
         }
         if (row == length) {
-            System.out.println("union " + p + " 1");
+            // System.out.println("union " + p + " 1");
             uf.union(p, 1);
         }
         for (int q : findOpenAround(row, col)) {
-            System.out.println("union " + p + " " + q);
+            // System.out.println("union " + p + " " + q);
             uf.union(p, q);
         }
-        System.out.println("bottom to: " + uf.find(1));
+        // System.out.println("bottom to: " + uf.find(1));
         numberOpenSites += 1;
     }
 
