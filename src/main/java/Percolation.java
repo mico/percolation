@@ -49,7 +49,7 @@ public class Percolation {
     }
 
     private void validate(int row, int col) {
-        if (row < 0 || col < 0 || row > length || col > length) {
+        if (row <= 0 || col <= 0 || row > length || col > length) {
             throw new IllegalArgumentException("Row or column outside its prescribed range");
         }
     }

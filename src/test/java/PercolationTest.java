@@ -73,4 +73,13 @@ public class PercolationTest {
     public void isFullShouldThrowIllegalArgumentExceptionForNegativeRowOrCol() {
         pc.isFull(1, -6);
     }
+
+    // * n = 10, (row, col) = (5, 0)
+    // - open() fails to throw an exception
+    // - open() should throw a java.lang.IllegalArgumentException
+    @Test(expectedExceptions = IllegalArgumentException.class, groups = "exception")
+    public void openShouldThrowIllegalArgumentExceptionForZeroRowOrCol() {
+        pc.open(5, 0);
+    }
+
 }
