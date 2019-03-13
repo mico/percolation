@@ -37,6 +37,10 @@ public class PercolationTest {
                 };
 
                 assertEquals(pc.percolates(), true);
+                // check for backwash bug
+                if (file_id == 20) {
+                    assertEquals(pc.isFull(18, 1), false);
+                }
 
             } catch (IOException e) {
                 System.out.print("io exception\n");

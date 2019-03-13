@@ -6,6 +6,7 @@ public class Percolation {
     private final int length;
     private boolean[] openSites;
     private int numberOpenSites = 0;
+    private boolean connected = false;
 
     // create n-by-n grid, with all sites blocked
     public Percolation(int n) {
@@ -59,17 +60,13 @@ public class Percolation {
         int p = positionByRowCol(row, col);
         // System.out.println("row " + row + " col " + col);
         openSites[p - FIRST_INDEX] = true;
-        // System.out.println("open " + p);
+//         System.out.println("open " + p);
         if (row == 1) {
-            // System.out.println("union " + p + " 0");
+//             System.out.println("union " + p + " 0");
             uf.union(p, 0);
         }
-        if (row == length) {
-            // System.out.println("union " + p + " 1");
-            uf.union(p, 1);
-        }
         for (int q : findOpenAround(row, col)) {
-            // System.out.println("union " + p + " " + q);
+//             System.out.println("union " + p + " " + q);
             uf.union(p, q);
         }
         // System.out.println("bottom to: " + uf.find(1));
@@ -95,7 +92,17 @@ public class Percolation {
 
     // does the system percolate?
     public boolean percolates() {
-        return uf.connected(0, 1);
+        if (connected) {
+            return true;
+        }
+        for (int i = 1; i < length + 1; i++) {
+            if (uf.connected(positionByRowCol(length, i), 0)) {
+                // do not calculate again if already connected
+                connected = true;
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void main(String[] args) {
