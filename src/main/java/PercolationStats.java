@@ -5,7 +5,6 @@ public class PercolationStats {
     private static final double CONFIDENCE_95 = 1.96;
     private final int n, trials;
     private double[] results;
-    private int total = 0;
 
     public PercolationStats(int n, int trials)    // perform trials independent experiments on an n-by-n grid
     {
@@ -24,18 +23,23 @@ public class PercolationStats {
                 int row = StdRandom.uniform(n) + 1;
                 int col = StdRandom.uniform(n) + 1;
                 pc.open(row, col);
-                // print("opened " + pc.numberOfOpenSites() + "\n");
+//                print("opened " + pc.numberOfOpenSites() + "\n");
             }
-            // print("percolates " + i + "\n");
+            System.out.print("percolates " + pc.numberOfOpenSites() + "\n");
             results[i] = pc.numberOfOpenSites();
-            total += pc.numberOfOpenSites();
         }
     }
 
     public double mean()                          // sample mean of percolation threshold
     {
-        return StdStats.mean(results);
+        double[] samples = new double[results.length];
+        for (int i = 0; i < samples.length; i ++) {
+            samples[i] = (results[i] / (n * n));
+//            System.out.println("sample: " + samples[i]);
+        }
+        return StdStats.mean(samples);
     }
+
     public double stddev()                        // sample standard deviation of percolation threshold
     {
         return StdStats.stddev(results);
