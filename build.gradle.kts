@@ -25,7 +25,7 @@ tasks.checkstyleTest.configure {
 }
 
 application {
-    mainClassName = "PercolationVisualizer"
+    mainClassName = "PercolationStats"
 }
 
 dependencies {
@@ -34,6 +34,7 @@ dependencies {
 
     // Use TestNG framework, also requires calling test.useTestNG() below
     testImplementation("org.testng:testng:6.14.3")
+    testImplementation("org.mockito:mockito-core:2.23.0")
     compile(fileTree("lib").matching{ include("*.jar") })
 }
 
@@ -41,15 +42,3 @@ val test by tasks.getting(Test::class) {
     // Use TestNG for unit tests
     useTestNG()
 }
-
-// tasks {
-//     task("submission", type = Zip::class) {
-//         username = System.properties["user.name"].replaceAll(" ", "").toLowerCase()
-//         archiveName = username + "_" + rootProject.name + "_submission.zip"
-//         from("src/main/java")
-//         include("*.java")
-//             destinationDir(projectDir)
-//     }
-// }
-
-// build.finalizedBy(submission)
