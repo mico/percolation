@@ -44,7 +44,9 @@ public class Percolation {
 
     // returns the number of open sites
     public int numberOfOpenSites() {
-        return 0;
+        int opened = 0;
+        for(int i = 0; i < n*n; i++) if (openSites[i] == 1) opened++;
+        return opened;
     }
 
     // does the system percolate?

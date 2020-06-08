@@ -102,6 +102,14 @@ public class PercolationTest {
     }
 
     @Test
+    public void shouldOpenTwoCells() {
+        Percolation pc = new Percolation(3);
+        pc.open(1, 1);
+        pc.open(2, 1);
+        assertEquals(pc.numberOfOpenSites(), 2);
+    }
+
+    @Test
     public void shouldNotBeOpenAfterInitialize() {
         Percolation pc = new Percolation(1);
         //pc.open(1, 1);
