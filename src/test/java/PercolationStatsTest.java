@@ -30,7 +30,30 @@ public class PercolationStatsTest {
     @Test
     public void shouldReturnMeanInAcceptableRange() {
         PercolationStats ps = new PercolationStats(2, 10000);
-        assertTrue(ps.mean() >= 0.6, "Should be higher then 0.6");
-        assertTrue(ps.mean() <= 0.7, "Should be lower then 0.7");
+        assert ps.mean() >= 0.55 : String.format("Should be higher then 0.55 (%f)", ps.mean());
+        assert ps.mean() <= 0.7 : String.format("Should be lower then 0.7 (%f)", ps.mean());
     }
+
+    @Test
+    public void shouldReturnStddevInAcceptableRange() {
+        PercolationStats ps = new PercolationStats(2, 10000);
+        assert ps.stddev() > 0.0 : String.format("Should be higher then 0.0 (%f)", ps.stddev());
+        assert ps.stddev() <= 0.2 : String.format("Should be lower then 0.2 (%f)", ps.stddev());
+    }
+
+    @Test
+    public void shouldReturnConfidenceLoInAcceptableRange() {
+        PercolationStats ps = new PercolationStats(2, 10000);
+        assert ps.confidenceLo() > 0.55 : String.format("Should be higher then 0.0 (%f)", ps.confidenceLo());
+        assert ps.confidenceLo() <= 0.7 : String.format("Should be lower then 0.2 (%f)", ps.confidenceLo());
+    }
+
+    @Test
+    public void shouldReturnConfidenceHiInAcceptableRange() {
+        PercolationStats ps = new PercolationStats(2, 10000);
+        assert ps.confidenceHi() > 0.55 : String.format("Should be higher then 0.0 (%f)", ps.confidenceHi());
+        assert ps.confidenceHi() <= 0.7 : String.format("Should be lower then 0.2 (%f)", ps.confidenceHi());
+    }
+
+
 }

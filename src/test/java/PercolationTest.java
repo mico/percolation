@@ -21,6 +21,8 @@ public class PercolationTest {
     public void setUpException() {
         pc = new Percolation(5);
     }
+
+    // TODO: make separate test for every file (with file name)
     @Test
     public void percolatesForGivenData() {
         final List<Integer> files = Arrays.asList(1,2,3,4,5,6,7,8,10,20,50);
@@ -31,20 +33,38 @@ public class PercolationTest {
                 Percolation pc = new Percolation(Integer.parseInt(lines.remove(0)));
                 for (String line : lines) {
                     String[] row = line.trim().split("\\s+");
-                    if (line.trim().length() == 0) { continue; }
+                    if (line.trim().length() == 0) continue;
                     pc.open(Integer.parseInt(row[0]), Integer.parseInt(row[1]));
                 };
 
-                assertEquals(pc.percolates(), true);
+                assert pc.percolates() == true : String.format("File input%s.txt should percolate", file_id);
                 // check for backwash bug
+                // TODO: add this as separate test
                 if (file_id == 20) {
-                    assertEquals(pc.isFull(18, 1), false);
+                    assert pc.isFull(18, 1) == false;
                 }
 
             } catch (IOException e) {
-                System.out.print("io exception\n");
+                System.out.print(e.toString());
             }
         });
+    }
+
+
+    @Test
+    public void shouldPercolate() {
+        Percolation pc = new Percolation(2);
+        pc.open(1, 1);
+        pc.open(2, 1);
+        pc.open(2, 2);
+        assertEquals(pc.percolates(), true);
+    }
+
+    @Test
+    public void shouldOpenSite() {
+        Percolation pc = new Percolation(1);
+        pc.open(1, 1);
+        assertEquals(pc.isOpen(1,1), true);
     }
 
     // The constructor should throw a java.lang.IllegalArgumentException if n ≤ 0.
@@ -64,12 +84,22 @@ public class PercolationTest {
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class, groups = "exception")
-    public void isOpenShouldThrowIllegalArgumentExceptionForNegativeRowOrCol() {
+    public void isOpenShouldThrowIllegalArgumentExceptionForNegativeRow() {
+        pc.isOpen(-6, 1);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class, groups = "exception")
+    public void isOpenShouldThrowIllegalArgumentExceptionForNegativeCol() {
         pc.isOpen(1, -6);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class, groups = "exception")
-    public void isFullShouldThrowIllegalArgumentExceptionForNegativeRowOrCol() {
+    public void isFullShouldThrowIllegalArgumentExceptionForNegativeRow() {
+        pc.isFull(-5, 2);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class, groups = "exception")
+    public void isFullShouldThrowIllegalArgumentExceptionForNegativeCol() {
         pc.isFull(1, -6);
     }
 
@@ -77,8 +107,12 @@ public class PercolationTest {
     // - open() fails to throw an exception
     // - open() should throw a java.lang.IllegalArgumentException
     @Test(expectedExceptions = IllegalArgumentException.class, groups = "exception")
-    public void openShouldThrowIllegalArgumentExceptionForZeroRowOrCol() {
-        pc.open(5, 0);
+    public void openShouldThrowIllegalArgumentExceptionForZeroRow() {
+        pc.open(0, 5);
     }
 
+    @Test(expectedExceptions = IllegalArgumentException.class, groups = "exception")
+    public void openShouldThrowIllegalArgumentExceptionForZeroCol() {
+        pc.open(5, 0);
+    }
 }
