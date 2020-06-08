@@ -3,7 +3,7 @@ import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
     // perform independent trials on an n-by-n grid
-    private double results[];
+    private double[] results;
     private int trials;
     private Percolation percolation;
 

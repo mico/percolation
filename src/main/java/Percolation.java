@@ -1,31 +1,31 @@
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
-    private WeightedQuickUnionUF sites;
-    private int n;
-    private int openSites[];
+    private final WeightedQuickUnionUF sites;
+    private final int n;
+    private int[] openSites;
 
     public Percolation(int n) {
         if (n < 1)
             throw new IllegalArgumentException("n cannot be less than 0");
         this.n = n;
-        sites = new WeightedQuickUnionUF(n*n+4);
+        this.sites = new WeightedQuickUnionUF(n*n+4);
         openSites = new int[n*n];
     }
     public void open(int row, int col) {
         checkRowCol(row, col);
-        if (row > 1)
-            sites.union(getPositionByRowCol(row, col), getPositionByRowCol(row - 1, col));
-        if (row < n)
-            sites.union(getPositionByRowCol(row, col), getPositionByRowCol(row + 1, col));
-        if (col > 1)
-            sites.union(getPositionByRowCol(row, col), getPositionByRowCol(row, col - 1));
-        if (col < n)
-            sites.union(getPositionByRowCol(row, col), getPositionByRowCol(row, col + 1));
+        if (row > 1 && isOpen(row - 1, col))
+            sites.union(getPositionByRowCol(row - 1, col), getPositionByRowCol(row, col));
+        if (row < n && isOpen(row + 1, col))
+            sites.union(getPositionByRowCol(row + 1, col), getPositionByRowCol(row, col));
+        if (col > 1 && isOpen(row , col - 1))
+            sites.union(getPositionByRowCol(row, col - 1), getPositionByRowCol(row, col));
+        if (col < n && isOpen(row, col + 1))
+            sites.union(getPositionByRowCol(row, col + 1), getPositionByRowCol(row, col));
 
         if (row == 1)
             sites.union(getPositionByRowCol(row, col), 0);
-        if (row == n)
+        if (row == n && sites.find(1) != sites.find(0))
             sites.union(getPositionByRowCol(row, col), 1);
 
         openSites[getPositionByRowCol(row, col) - 2] = 1;
@@ -39,8 +39,7 @@ public class Percolation {
 
     // is the site (row, col) full?
     public boolean isFull(int row, int col) {
-        checkRowCol(row, col);
-        return openSites[getPositionByRowCol(row, col) - 2] == 0;
+        return sites.find(0) == sites.find(getPositionByRowCol(row, col));
     }
 
     // returns the number of open sites

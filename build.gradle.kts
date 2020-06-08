@@ -3,6 +3,7 @@ plugins {
     java
     application
     checkstyle
+    pmd
 }
 
 repositories {
@@ -18,6 +19,10 @@ sourceSets["main"].java.srcDir("src/main")
 
 checkstyle {
     toolVersion = "8.5"
+}
+
+pmd {
+    isConsoleOutput = true
 }
 
 tasks.checkstyleTest.configure {

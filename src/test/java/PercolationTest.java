@@ -4,7 +4,6 @@
 
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeGroups;
-import static org.testng.Assert.assertEquals;
 
 import java.nio.file.Files;
 import java.util.List;
@@ -13,6 +12,8 @@ import java.nio.file.Files;
 import java.nio.file.FileSystems;
 import java.io.IOException;
 import java.util.Arrays;
+
+import static org.testng.Assert.*;
 
 public class PercolationTest {
     Percolation pc;
@@ -67,6 +68,46 @@ public class PercolationTest {
         assertEquals(pc.isOpen(1,1), true);
     }
 
+    @Test
+    public void shouldNotBeFullAfterInitialize() {
+        Percolation pc = new Percolation(1);
+        //pc.open(1, 1);
+        assertEquals(pc.isFull(1,1), false);
+    }
+
+    @Test
+    public void shouldBeFull() {
+        Percolation pc = new Percolation(1);
+        pc.open(1, 1);
+        assertEquals(pc.isFull(1,1), true);
+    }
+
+    @Test
+    public void connectToNeighbourCellsOnlyIfOpen() {
+        Percolation pc = new Percolation(2);
+        pc.open(1, 1);
+        assertTrue(pc.isFull(1,1));
+        assertFalse(pc.isFull(1,2));
+        assertFalse(pc.isFull(2,2));
+    }
+
+    @Test
+    public void cellsNotConnectedToTopShouldNotBeFull() {
+        Percolation pc = new Percolation(3);
+        pc.open(1, 1);
+        pc.open(2, 1);
+        pc.open(3, 1);
+        pc.open(3, 3);
+        assertFalse(pc.isFull(3,3));
+    }
+
+    @Test
+    public void shouldNotBeOpenAfterInitialize() {
+        Percolation pc = new Percolation(1);
+        //pc.open(1, 1);
+        assertEquals(pc.isOpen(1,1), false);
+    }
+
     // The constructor should throw a java.lang.IllegalArgumentException if n ≤ 0.
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void shouldThrowIllegalArgumentException() {
@@ -115,4 +156,6 @@ public class PercolationTest {
     public void openShouldThrowIllegalArgumentExceptionForZeroCol() {
         pc.open(5, 0);
     }
+
+
 }
